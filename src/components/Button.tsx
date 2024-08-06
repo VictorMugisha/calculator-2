@@ -100,14 +100,7 @@ export default function Button({ className, value, type }: ButtonProps) {
             return number !== "x" ? prev + number : prev + '*'
         });
     }
-    useEffect(() => {
-        function handleKeyPress(event: KeyboardEvent) {
-            console.log(event.key)
-        }
-        window.addEventListener("keydown", handleKeyPress);
-
-        return () => window.removeEventListener("keydown", handleKeyPress);
-    }, []);
+   
 
     return (
         <button
