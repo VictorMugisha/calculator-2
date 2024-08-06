@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
 import { useResultContext } from "../context/useResultContext";
+import { useScreenCache } from "../context/useScreenCache";
 
 interface ButtonProps {
     className?: string;
     value: string;
     type?: string;
 }
-
-interface ScreenCacheType {
-    expression: string;
-    result: string
-}
-
 export default function Button({ className, value, type }: ButtonProps) {
     const { currentScreenValue, setCurrentScreenValue } = useScreenContext()
-    const { result, setResult } = useResultContext()
+    const { setResult } = useResultContext()
 
-    const [screenCache, setScreenCache] = useState<ScreenCacheType>({ expression: '', result: '' })
+    const { screenCache, setScreenCache } = useScreenCache()
 
     function calculateResult() {
         const lastChar = currentScreenValue.slice(-1)
 
         if (lastChar === '.' || lastChar === "+" || lastChar === "-" || lastChar === "÷" || lastChar === "x") return
+        setScreenCache(prevCache => ({
+            ...prevCache,
+            result: eval(currentScreenValue),
+        }))
         setResult(eval(currentScreenValue))
     }
 
@@ -38,10 +37,10 @@ export default function Button({ className, value, type }: ButtonProps) {
         }
 
         if (value === "=") {
-            setScreenCache({
+            setScreenCache(prevCache => ({
+                ...prevCache,
                 expression: currentScreenValue,
-                result: result
-            })
+            }))
             calculateResult()
             return
         }

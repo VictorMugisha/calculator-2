@@ -1,4 +1,5 @@
 import ResultContextProvider from "../context/ResultContextProvider";
+import { ScreenCacheProvider } from "../context/ScreenCacheProvider";
 import ScreenContextProvider from "../context/screenContextProvider";
 import Keyboard from "./Keyboard";
 import Screen from "./Screen";
@@ -10,8 +11,10 @@ export default function Layout() {
         >
             <ScreenContextProvider>
                 <ResultContextProvider>
-                    <Screen />
-                    <Keyboard />
+                    <ScreenCacheProvider>
+                        <Screen />
+                        <Keyboard />
+                    </ScreenCacheProvider>
                 </ResultContextProvider>
             </ScreenContextProvider>
         </div>
