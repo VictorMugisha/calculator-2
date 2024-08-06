@@ -20,7 +20,7 @@ export default function Keyboard() {
                         <Button key={number} value={number} type="number" />
                     ))
                 }
-                <Button value="X" className="text-blue-500 text-5xl" type="operator" />
+                <Button value="x" className="text-blue-500 text-5xl" type="operator" />
                 {
                     ['1', '2', '3'].map(number => (
                         <Button key={number} value={number} type="number" />

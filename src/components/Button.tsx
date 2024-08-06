@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
-import { VscLaw } from "react-icons/vsc";
 
 interface ButtonProps {
     className?: string;
@@ -13,28 +12,42 @@ interface ButtonProps {
 export default function Button({ className, value, type }: ButtonProps) {
     const { currentScreenValue, setCurrentScreenValue } = useScreenContext()
 
+    function calculateResult() {
+        const lastChar = currentScreenValue.slice(-1)
+
+        if (lastChar === '.' || lastChar === "+" || lastChar === "-" || lastChar === "÷" || lastChar === "x") return
+
+        alert(eval(currentScreenValue))
+    }
+
     function addNumberToScreen(number: string, setCurrentScreenValue: React.Dispatch<React.SetStateAction<string>>) {
-        if (currentScreenValue.length > 16) return
+        if (currentScreenValue.length >= 9) return
 
         if (value === "Regenerate") {
             return
         }
 
+        if (value === "=") {
+            calculateResult()
+            return
+        }
+
         if (type === "operator") {
             const last = currentScreenValue.slice(-1)
-            const isLastOperator = last === "+" || last === "-" || last === "÷" || last === "X"
+            const isLastOperator = (last === "+" || last === "-" || last === "÷" || last === "x")
+            const isFirst = currentScreenValue.length === 0
             switch (value) {
                 case "+":
-                    if (isLastOperator) return
+                    if (isLastOperator || isFirst) return
                     break
                 case "-":
                     if (isLastOperator) return
                     break
-                case "X":
-                    if (isLastOperator) return
+                case "x":
+                    if (isLastOperator || isFirst) return
                     break
                 case "÷":
-                    if (isLastOperator) return
+                    if (isLastOperator || isFirst) return
                     break
             }
         } else {
@@ -69,7 +82,9 @@ export default function Button({ className, value, type }: ButtonProps) {
             }
         }
 
-        setCurrentScreenValue(prev => prev + number);
+        setCurrentScreenValue(prev => {
+            return number !== "x" ? prev + number : prev + '*'
+        });
     }
     useEffect(() => {
         // function handleKeyPress(event: KeyboardEvent) {
