@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
+import { useResultContext } from "../context/useResultContext";
 
 interface ButtonProps {
     className?: string;
@@ -11,13 +12,14 @@ interface ButtonProps {
 
 export default function Button({ className, value, type }: ButtonProps) {
     const { currentScreenValue, setCurrentScreenValue } = useScreenContext()
+    const { setResult } = useResultContext()
 
     function calculateResult() {
         const lastChar = currentScreenValue.slice(-1)
 
         if (lastChar === '.' || lastChar === "+" || lastChar === "-" || lastChar === "÷" || lastChar === "x") return
 
-        alert(eval(currentScreenValue))
+        setResult(eval(currentScreenValue))
     }
 
     function addNumberToScreen(number: string, setCurrentScreenValue: React.Dispatch<React.SetStateAction<string>>) {
