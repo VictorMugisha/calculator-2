@@ -6,46 +6,61 @@ import { useScreenContext } from "../context/useScreenContext";
 interface ButtonProps {
     className?: string;
     value: string;
-    type?: string; 
+    type?: string;
 }
 
-export default function Button({ className, value }: ButtonProps) {
-    const {currentScreenValue, setCurrentScreenValue} = useScreenContext()
-    
+export default function Button({ className, value, type }: ButtonProps) {
+    const { currentScreenValue, setCurrentScreenValue } = useScreenContext()
+
     function addNumberToScreen(number: string, setCurrentScreenValue: React.Dispatch<React.SetStateAction<string>>) {
         if (currentScreenValue.length > 16) return
 
-        if (value === "AC") {
-            setCurrentScreenValue("")
+        if (value === "Regenerate") {
             return
         }
 
-        if (value === "back") {
-            setCurrentScreenValue(prev => prev.slice(0, -1))
-            return
-        }
+        if (type === "operator") {
 
-        if (value === ".") {
-            if (currentScreenValue.includes('.')) return
-            if (currentScreenValue === "") {
-                setCurrentScreenValue("0");
+        } else {
+            if (value === "AC") {
+                setCurrentScreenValue("")
+                return
             }
-            setCurrentScreenValue(prev => prev + number);
-            return
-        }
 
-        if(value === "0") {
-            
+            if (value === "back") {
+                setCurrentScreenValue(prev => prev.slice(0, -1))
+                return
+            }
+
+            if (value === ".") {
+                if (currentScreenValue.includes('.')) return
+                if (currentScreenValue === "") {
+                    setCurrentScreenValue("0");
+                }
+                setCurrentScreenValue(prev => prev + number);
+                return
+            }
+
+            if (value === "0") {
+                if (currentScreenValue === "0") {
+                    return
+                }
+            }
+
+            if (currentScreenValue === "0") {
+                setCurrentScreenValue(value)
+                return
+            }
         }
 
         setCurrentScreenValue(prev => prev + number);
     }
     useEffect(() => {
         // function handleKeyPress(event: KeyboardEvent) {
-            // console.log(event.key)
-            // if (!isNaN(Number(event.key)) || event.key === "." || event.key === "Backspace") {
-            //     setCurrentScreenValue(prev => (event.key === "Backspace" ? prev.slice(0, -1) : prev + event.key));
-            // }
+        // console.log(event.key)
+        // if (!isNaN(Number(event.key)) || event.key === "." || event.key === "Backspace") {
+        //     setCurrentScreenValue(prev => (event.key === "Backspace" ? prev.slice(0, -1) : prev + event.key));
+        // }
         // }
         // document.addEventListener("keypress", handleKeyPress);
 
