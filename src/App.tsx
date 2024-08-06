@@ -1,9 +1,10 @@
 import './App.css'
+import Layout from './components/Layout'
 
 function App() {
   return (
-    <div>
-      <h1 className="text-4xl font-bold">Hello React - TS</h1>
+    <div className="min-w-full min-h-screen bg-custom-gray flex items-center justify-center">
+      <Layout />
     </div>
   )
 }
