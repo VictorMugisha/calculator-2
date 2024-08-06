@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
+import { VscLaw } from "react-icons/vsc";
 
 interface ButtonProps {
     className?: string;
@@ -20,7 +21,22 @@ export default function Button({ className, value, type }: ButtonProps) {
         }
 
         if (type === "operator") {
-
+            const last = currentScreenValue.slice(-1)
+            const isLastOperator = last === "+" || last === "-" || last === "÷" || last === "X"
+            switch (value) {
+                case "+":
+                    if (isLastOperator) return
+                    break
+                case "-":
+                    if (isLastOperator) return
+                    break
+                case "X":
+                    if (isLastOperator) return
+                    break
+                case "÷":
+                    if (isLastOperator) return
+                    break
+            }
         } else {
             if (value === "AC") {
                 setCurrentScreenValue("")
