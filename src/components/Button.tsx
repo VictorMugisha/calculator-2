@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
