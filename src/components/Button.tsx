@@ -55,6 +55,7 @@ export default function Button({ className, value, type }: ButtonProps) {
         } else {
             if (value === "AC") {
                 setCurrentScreenValue("")
+                setResult("")
                 return
             }
 
