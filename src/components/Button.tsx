@@ -101,15 +101,12 @@ export default function Button({ className, value, type }: ButtonProps) {
         });
     }
     useEffect(() => {
-        // function handleKeyPress(event: KeyboardEvent) {
-        // console.log(event.key)
-        // if (!isNaN(Number(event.key)) || event.key === "." || event.key === "Backspace") {
-        //     setCurrentScreenValue(prev => (event.key === "Backspace" ? prev.slice(0, -1) : prev + event.key));
-        // }
-        // }
-        // document.addEventListener("keypress", handleKeyPress);
+        function handleKeyPress(event: KeyboardEvent) {
+            console.log(event.key)
+        }
+        window.addEventListener("keydown", handleKeyPress);
 
-        // return () => document.removeEventListener("keypress", handleKeyPress);
+        return () => window.removeEventListener("keydown", handleKeyPress);
     }, []);
 
     return (
