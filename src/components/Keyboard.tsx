@@ -7,7 +7,7 @@ export default function Keyboard() {
         >
             <div className="grid w-full grid-cols-4 gap-4">
                 <Button value="AC" type="reset" />
-                <Button value="Regenerate" className="col-span-2 text-green-500 text-xl" type="regenerate" />
+                <Button value="Regenerate" className="col-span-2 text-green-500 text-lg lg:text-xl" type="regenerate" />
                 <Button value="÷" className="text-blue-500" type="operator" />
                 {
                     ['7', '8', '9'].map(number => (

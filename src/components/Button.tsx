@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaBackspace } from "react-icons/fa";
 
 import { useScreenContext } from "../context/useScreenContext";
@@ -10,15 +10,21 @@ interface ButtonProps {
     type?: string;
 }
 
+interface ScreenCacheType {
+    expression: string;
+    result: string
+}
+
 export default function Button({ className, value, type }: ButtonProps) {
     const { currentScreenValue, setCurrentScreenValue } = useScreenContext()
-    const { setResult } = useResultContext()
+    const { result, setResult } = useResultContext()
+
+    const [screenCache, setScreenCache] = useState<ScreenCacheType>({ expression: '', result: '' })
 
     function calculateResult() {
         const lastChar = currentScreenValue.slice(-1)
 
         if (lastChar === '.' || lastChar === "+" || lastChar === "-" || lastChar === "÷" || lastChar === "x") return
-
         setResult(eval(currentScreenValue))
     }
 
@@ -26,10 +32,16 @@ export default function Button({ className, value, type }: ButtonProps) {
         if (currentScreenValue.length >= 9) return
 
         if (value === "Regenerate") {
+            setCurrentScreenValue(screenCache.expression)
+            setResult(screenCache.result)
             return
         }
 
         if (value === "=") {
+            setScreenCache({
+                expression: currentScreenValue,
+                result: result
+            })
             calculateResult()
             return
         }
@@ -103,7 +115,7 @@ export default function Button({ className, value, type }: ButtonProps) {
 
     return (
         <button
-            className={`p-6 outline-none flex items-center justify-center rounded-3xl font-semibold text-2xl shadow-md ${className}`}
+            className={`p-4 lg:p-6 outline-none flex items-center justify-center rounded-3xl font-semibold text-2xl shadow-md ${className}`}
             onClick={() => addNumberToScreen(value, setCurrentScreenValue)}
         >
             {value === "back" ? <FaBackspace /> : value}
