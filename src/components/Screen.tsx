@@ -7,13 +7,13 @@ export default function Screen() {
             <div
                 className="relative w-full font-semibold text-5xl flex items-center justify-end flex-wrap break-words overflow-hidden"
             >
-                <span className="truncate">1242322093392312</span>
+                <span className="truncate"></span> {/* 18 */}
             </div>
 
             <div
                 className="text-3xl text-blue-600 font-semibold"
             >
-                _
+                
             </div>
         </div>
     )
